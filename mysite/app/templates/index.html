@@ -29,15 +29,12 @@
 
     <div class="container">
         <div class="city-container">
-            <!-- <div class="icon-container">
-                <button type="button" class="btn btn-danger">X</button>
-                <div class="eye-icon" style="width: 50px; height: 50px;"><img src="{% static 'app/img/eye_solid.svg' %}" alt="Eye Icon"></div>
-                <li class="eye-icon" style="width: 50px; height: 50px;"><img src="{% static 'app/img/eye_solid.svg' %}" alt="Eye Icon"></li>
-            </div> -->
+            
             {% if weather_data %}
-                <div class="weather-results">
-                    {% include 'weather.html' with weather_data=weather_data %}
-                </div>
+                    <div class="weather-results">
+                        {% include 'weather.html' with weather_data=weather_data %}
+                    </div>
+           
             {% endif %}
         </div>
     </div>
