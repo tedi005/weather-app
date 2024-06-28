@@ -3,7 +3,7 @@ import requests
 import datetime
 
 
-from django.contrib import messages 
+from django.contrib import messages
 
 def index(request):
     api_key = '21a80af226771c512fda9aa0a28d0b9b'
@@ -22,8 +22,11 @@ def index(request):
                 request.session['weather_data'] = weather_data_list
 
             else:
-                messages.info(request, messages.INFO, "city already added!") # NEED TO FIX THIS ONE
+                messages.info(request, "City already added!")
                 weather_data = None
+        else:
+            messages.info(request, "City not found!")
+            weather_data = None
 
     context = {
         'weather_data': request.session['weather_data']
@@ -37,6 +40,7 @@ def fetch_weather(city, api_key, current_weather_url):
     
     if response.get('cod') != 200:
         return None
+
 
     weather_data = {
         'city': city,
