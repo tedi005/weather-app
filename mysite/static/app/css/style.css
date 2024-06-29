@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #b4a0a0;
     text-align: center;
     padding: 50px;
     position: relative; /* Add this */
@@ -17,7 +17,7 @@ input[type="text"] {
 }
 
 form button {
-    background-color: #777e77;
+    background-color: #8f978f;
     color: white;
     padding: 5px 10px;
     border: none;
@@ -25,20 +25,34 @@ form button {
     cursor: pointer;
 }
 
+.form2 img{
+    height: 80px;
+    width: 80px;
+}
+
 .container {
     border-radius: 10px;
     position: relative;
     margin: 0 auto; /* Center the container */
+    
+}
+
+/* the icons */
+.icon-container{
+    margin: 5px;
 }
 
 
 /* the weather items */
-.weather-results {
-    margin-top: 20px;
+.icon-container {
+    display: flex;
+    gap: 15px; /* Adjust the gap as needed */
+    align-items: center; /* Aligns items vertically */
 }
 
 .weather-result {
-    border: 1px solid #ccc;
+    background-color: white;
+    border: 1px solid #f3ecec;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;

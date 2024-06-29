@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 import requests
-import datetime
+
 
 
 from django.contrib import messages
-# from django.urls import reverse
-from django.http import Http404
+
+from urllib.request import urlopen
+import json
 
 def index(request):
     api_key = '21a80af226771c512fda9aa0a28d0b9b'
@@ -13,22 +14,24 @@ def index(request):
 
     if 'weather_data' not in request.session:
         request.session['weather_data'] = []
+        
 
     if request.method == 'POST':
-        city = request.POST['user_data']
-        weather_data = fetch_weather(city, api_key, current_weather_url)
+        if 'current-location' in request.POST:
+            weather_data = get_current_location_weather(api_key, current_weather_url)
+        else:
+            city = request.POST['user_data']
+            weather_data = fetch_weather(city, api_key, current_weather_url)
         if weather_data:
             weather_data_list = request.session['weather_data']
             if weather_data not in weather_data_list:
                 weather_data_list.append(weather_data)
                 request.session['weather_data'] = weather_data_list
-
             else:
                 messages.info(request, "City already added!")
-                weather_data = None
         else:
             messages.info(request, "City not found!")
-            weather_data = None
+            
 
     context = {
         'weather_data': request.session['weather_data']
@@ -53,15 +56,11 @@ def fetch_weather(city, api_key, current_weather_url):
 
     return weather_data
 
-def cancel_dublicate_request(request):
-    pass
-
-
 
 
 def delete_item(request, city):
     if not city:
-        raise Http404("City not found")
+        messages.info(request, "City not found!")
     if request.method == "POST":
         weather_data = request.session.get('weather_data', [])
         updated_weather_data = [weather for weather in weather_data if weather['city'] != city]
@@ -71,7 +70,25 @@ def delete_item(request, city):
         return render(request, 'delete.html', {'city': city})
 
 
+def get_current_location_weather(api_key, current_weather_url):
+    try:
+        url = 'https://ipinfo.io/json'
+        response = urlopen(url)
+        location_data = json.load(response)
+        city = location_data.get('city')
+        if city:
+            return fetch_weather(city, api_key, current_weather_url)
+        else:
+            return None
+    except Exception as e:
+        print(f"Error fetching current location weather: {e}")
+        return None
 
+
+
+def see_more(request, city):
+    
+    return render(request, 'see_more.html' ,{'city':city})
 
 
 

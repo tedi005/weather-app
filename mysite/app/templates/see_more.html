@@ -1,12 +1,11 @@
+<h4>see more page</h4>
+
+
 
 
 {% if weather_data %}
  {% for weather in weather_data %}
      <div class="weather-result">
-         <div class="icon-container">
-             <a class="button-danger" href="{% url 'delete' weather.city %}">Delete</a>
-             <a class="eye-icon" href="{% url 'see_more' weather.city %}">see more</a>
-         </div>
          <h2>{{ weather.city |title }}</h2>
          <p>Temperature: {{ weather.temperature }}°C</p>
          <p>Description: {{ weather.description }}</p>
@@ -14,5 +13,3 @@
      </div>
  {% endfor %}
 {% endif %}
-
-

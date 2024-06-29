@@ -23,16 +23,21 @@
             {% endfor %}
         </ul>
     {% endif %}
+
+    
     
     <form method="POST" class="form">
         {% csrf_token %}
+        
         <input class="" type="text" name="user_data" placeholder="Search City" aria-label="Search">
-        <button type="submit" value="Submit">submit</button>
+        <button type="submit" value="Submit">submit</button> 
+        <button type="submit" value="Submit" name="current-location">get current weather</button>
     </form>
+
+    
 
     <div class="container">
         <div class="city-container">
-            
             {% if weather_data %}
                     <div class="weather-results">
                         {% include 'weather.html' with weather_data=weather_data %}

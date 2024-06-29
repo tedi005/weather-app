@@ -21,15 +21,24 @@ forecast_response = requests.get(forecast_url.format(lat, lon, api_key)).json()
 
 # print(response.json())
 print("------------------------------")
-print(forecast_response)
-
-
-
-# response = requests.get(current_weather_url)
-# print(response.json())
+# print(forecast_response)
 
 # {'coord': {'lon': 19.8189, 'lat': 41.3275}, 
 #  'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01n'}], 
 #  'base': 'stations', 'main': {'temp': 72.48, 'feels_like': 73.56, 'temp_min': 72.48, 'temp_max': 72.48, 'pressure': 1016, 'humidity': 88}, 
 #  'visibility': 10000, 'wind': {'speed': 3.44, 'deg': 170}, 'clouds': {'all': 0}, 'dt': 1718744899, 'sys': {'type': 1, 'id': 6359, 'country': 'AL', 'sunrise': 1718680030, 'sunset': 1718734601}, 
 #  'timezone': 7200, 'id': 3183875, 'name': 'Tirana', 'cod': 200}
+
+
+
+from urllib.request import urlopen
+import json
+
+url = 'https://ipinfo.io/json'
+response = urlopen(url)
+data = json.load(response)
+print(data['city'])
+
+
+
+
