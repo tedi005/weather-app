@@ -48,10 +48,21 @@ def fetch_weather(city, api_key, current_weather_url):
 
 
     weather_data = {
-        'city': city,
+        'city': response['name'],
         'temperature': round(response['main']['temp'] - 273.15, 2),
         'description': response['weather'][0]['description'],
         'icon': response['weather'][0]['icon'],
+        # other details
+        'country': response['sys']['country'],
+        'feels_like': round(response['main']['feels_like'] - 273.15, 2),
+        'temp_min': round (response['main']['temp_min'] - 273.15, 2),
+        'temp_max': round(response['main']['temp_max'] - 273.15, 2),
+        'visibility': round(response['visibility'] // 1000),
+        'pressure': response['main']['pressure'],
+        'humidity': response['main']['humidity'],
+        'wind_speed': response['wind']['speed'],
+        'wind_deg': response['wind']['deg']
+
     }
 
     return weather_data
@@ -87,11 +98,14 @@ def get_current_location_weather(api_key, current_weather_url):
 
 
 def see_more(request, city):
+    weather_data_list = request.session.get('weather_data', [])
+    detailed_data = next((weather for weather in weather_data_list if weather['city'] == city), None)
     
-    return render(request, 'see_more.html' ,{'city':city})
-
-
-
+    if detailed_data:
+        return render(request, 'see_more.html', {'weather_data': detailed_data})
+    else:
+        messages.info(request, "No detailed data found for this city.")
+        return redirect('index')
 
 
 
