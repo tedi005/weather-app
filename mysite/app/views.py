@@ -4,6 +4,8 @@ import datetime
 
 
 from django.contrib import messages
+# from django.urls import reverse
+from django.http import Http404
 
 def index(request):
     api_key = '21a80af226771c512fda9aa0a28d0b9b'
@@ -58,12 +60,15 @@ def cancel_dublicate_request(request):
 
 
 def delete_item(request, city):
-    weather_data = request.session.get('weather_data', [])
-    updated_weather_data = [weather for weather in weather_data if weather['city'] != city]
-    request.session['weather_data'] = updated_weather_data
-    return redirect('index') 
-
-    
+    if not city:
+        raise Http404("City not found")
+    if request.method == "POST":
+        weather_data = request.session.get('weather_data', [])
+        updated_weather_data = [weather for weather in weather_data if weather['city'] != city]
+        request.session['weather_data'] = updated_weather_data
+        return redirect('index')
+    else:
+        return render(request, 'delete.html', {'city': city})
 
 
 

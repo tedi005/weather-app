@@ -19,7 +19,6 @@
         <ul class="messages">
             {% for message in messages %}
                 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
-                    <!-- <span class="delete-message">×</span> -->
                 </li>
             {% endfor %}
         </ul>
