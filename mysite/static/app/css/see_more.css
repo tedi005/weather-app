@@ -1,0 +1,12 @@
+body{
+    background-color: aqua;
+}
+
+.weather-container{
+    background-color: rgb(188, 188, 204);
+    height: 600px;
+    width: 400px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 50px auto;
+}

@@ -1,29 +1,36 @@
-<h4>see more page</h4>
-
+<!-- <h4>see more page</h4> -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ city |title }} 
-    </title>
+    <title>{{ city |title }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/see_more.css'%}"></link>
 </head>
 <body>
     {% if weather_data %}
-            <div class="weather-result">
-                <h1>Weather Details for {{ weather_data.city }}</h1>
-                <p>Country: {{ weather_data.country }}</p>
-                <p>Temperature: {{ weather_data.temperature }}°C</p>
-                <p>Feels Like: {{ weather_data.feels_like }}°C</p>
-                <p>Min Temperature: {{ weather_data.temp_min }}°C</p>
-                <p>Max Temperature: {{ weather_data.temp_max }}°C</p>
-                <p>Visibility: {{ weather_data.visibility }} km</p>
-                <p>Pressure: {{ weather_data.pressure }} hPa</p>
-                <p>Humidity: {{ weather_data.humidity }}%</p>
-                <p>Wind Speed: {{ weather_data.wind_speed }} m/s</p>
-                <p>Wind Direction: {{ weather_data.wind_deg }}°</p>
-                <p>Description: {{ weather_data.description }}</p>
-                <img src="http://openweathermap.org/img/wn/{{ weather_data.icon }}.png" alt="{{ weather_data.description }}">
+            <div class="weather-container">
+                <div class="weather-button">
+                    <a href="{% url 'index' %}"><button>Back</button></a>
+                    <!-- <button onclick="window.location.href='{% url 'index' %}'">Back</button> -->
+                </div>
+                <div class="weather-result">
+                    <h1>{{ weather_data.city }}, {{ weather_data.country }}</h1>
+                    <img src="http://openweathermap.org/img/wn/{{ weather_data.icon }}.png" alt="{{ weather_data.description }}">
+                    <h3>Tem:  {{ weather_data.temperature }}°C</h3>
+                    <p>Feels Like: {{ weather_data.feels_like }}°C</p>
+                    <p>Min Temperature: {{ weather_data.temp_min }}°C</p>
+                    <p>Max Temperature: {{ weather_data.temp_max }}°C</p>
+                    <p>Visibility: {{ weather_data.visibility }} km</p>
+                    <p>Pressure: {{ weather_data.pressure }} hPa</p>
+                    <p>Humidity: {{ weather_data.humidity }}%</p>
+                    <p>Wind Speed: {{ weather_data.wind_speed }} m/s</p>
+                    <p>Wind Direction: {{ weather_data.wind_deg }}°</p>
+                    <p>Description: {{ weather_data.description }}</p>
+                    <p>Wind: {{weather_data.clouds}}</p>
+                </div>
+                
             </div>
         
     {% endif %}

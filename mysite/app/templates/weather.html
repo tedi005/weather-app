@@ -1,18 +1,101 @@
-
-
 {% if weather_data %}
- {% for weather in weather_data %}
-     <div class="weather-result">
-         <div class="icon-container">
-             <a class="button-danger" href="{% url 'delete' weather.city %}">Delete</a>
-             <a class="eye-icon" href="{% url 'see_more' weather.city %}">see more</a>
-         </div>
-         <h2>{{ weather.city |title }}</h2>
-         <p>Temperature: {{ weather.temperature }}°C</p>
-         <p>Description: {{ weather.description }}</p>
-         <img src="http://openweathermap.org/img/wn/{{ weather.icon }}.png" alt="Weather icon">
-     </div>
- {% endfor %}
+    {% for weather in weather_data %}
+        <div class="weather-result">
+            <div class="icon-container">
+                <a class="eye-icon" href="{% url 'see_more' weather.city %}"><button>see more</button></a>
+                <button id="delete-button-{{ weather.city }}" class="button-danger">Delete</button>
+            </div>
+            <h2>{{ weather.city | title }}</h2>
+            <p> {{ weather.temperature }}°C</p>
+            <p> {{ weather.description }}</p>
+            <img src="http://openweathermap.org/img/wn/{{ weather.icon }}.png" alt="Weather icon">
+        </div>
+    {% endfor %}
 {% endif %}
+
+<!-- Modal container -->
+<div id="delete-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <div id="modal-body"></div>
+    </div>
+</div>
+
+<style>
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    width: 350px;
+    height: 150px;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var modal = document.getElementById("delete-modal");
+    var modalBody = document.getElementById("modal-body");
+    var closeButton = document.getElementsByClassName("close-button")[0];
+
+    // Attach click event to each delete button
+    {% for weather in weather_data %}
+        document.getElementById('delete-button-{{ weather.city }}').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            // Set the modal content
+            modalBody.innerHTML = `
+                <h2>Are you sure you want to delete {{ weather.city }}?</h2>
+                <form action="{% url 'delete' weather.city %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Confirm</button>
+                </form>
+                <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+            `;
+            // Display the modal
+            modal.style.display = 'block';});
+    {% endfor %}
+
+    // Close the modal when the close button is clicked
+    closeButton.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Close the modal when the user clicks outside the modal
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+});
+</script>
+
 
 

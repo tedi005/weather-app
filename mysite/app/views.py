@@ -1,20 +1,17 @@
 from django.shortcuts import render, redirect
 import requests
-
-
-
 from django.contrib import messages
-
 from urllib.request import urlopen
 import json
 
+
 def index(request):
     api_key = '21a80af226771c512fda9aa0a28d0b9b'
-    current_weather_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
+    current_weather_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric'
 
     if 'weather_data' not in request.session:
         request.session['weather_data'] = []
-        
+
 
     if request.method == 'POST':
         if 'current-location' in request.POST:
@@ -32,9 +29,11 @@ def index(request):
         else:
             messages.info(request, "City not found!")
             
-
+        # Redirect to the same page to prevent form resubmission
+        return redirect('index')
+    
     context = {
-        'weather_data': request.session['weather_data']
+        'weather_data': request.session['weather_data'],
         
     }
 
@@ -49,19 +48,20 @@ def fetch_weather(city, api_key, current_weather_url):
 
     weather_data = {
         'city': response['name'],
-        'temperature': round(response['main']['temp'] - 273.15, 2),
+        'temperature': response['main']['temp'],
         'description': response['weather'][0]['description'],
         'icon': response['weather'][0]['icon'],
-        # other details
         'country': response['sys']['country'],
-        'feels_like': round(response['main']['feels_like'] - 273.15, 2),
-        'temp_min': round (response['main']['temp_min'] - 273.15, 2),
-        'temp_max': round(response['main']['temp_max'] - 273.15, 2),
-        'visibility': round(response['visibility'] // 1000),
+        'feels_like': response['main']['feels_like'],
+        'temp_min': response['main']['temp_min'],
+        'temp_max': response['main']['temp_max'],
+        'visibility': round(response['visibility'] // 1000, 2),
         'pressure': response['main']['pressure'],
         'humidity': response['main']['humidity'],
         'wind_speed': response['wind']['speed'],
-        'wind_deg': response['wind']['deg']
+        'wind_deg': response['wind']['deg'],
+        'clouds':response['clouds']['all'],
+   
 
     }
 
@@ -70,18 +70,17 @@ def fetch_weather(city, api_key, current_weather_url):
 
 
 def delete_item(request, city):
-    if not city:
-        messages.info(request, "City not found!")
-    if request.method == "POST":
+    if request.method == 'POST':
         weather_data = request.session.get('weather_data', [])
         updated_weather_data = [weather for weather in weather_data if weather['city'] != city]
         request.session['weather_data'] = updated_weather_data
         return redirect('index')
-    else:
-        return render(request, 'delete.html', {'city': city})
+    
+    # Handle GET request to show the delete confirmation page
+    return render(request, 'delete.html', {'city': city})
 
 
-def get_current_location_weather(api_key, current_weather_url):
+def get_current_location_weather(request, api_key, current_weather_url):
     try:
         url = 'https://ipinfo.io/json'
         response = urlopen(url)
@@ -92,7 +91,7 @@ def get_current_location_weather(api_key, current_weather_url):
         else:
             return None
     except Exception as e:
-        print(f"Error fetching current location weather: {e}")
+        messages.error(request, "Please try again.")
         return None
 
 
@@ -102,20 +101,10 @@ def see_more(request, city):
     detailed_data = next((weather for weather in weather_data_list if weather['city'] == city), None)
     
     if detailed_data:
-        return render(request, 'see_more.html', {'weather_data': detailed_data})
+        return render(request, 'see_more.html', {'city': city, 'weather_data': detailed_data})
     else:
         messages.info(request, "No detailed data found for this city.")
         return redirect('index')
-
-
-
-
-
-
-
-
-
-
 
 
 
