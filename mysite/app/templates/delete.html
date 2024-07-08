@@ -1,11 +1,11 @@
-{% load static %}
+<!-- {% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Delete {{ city|title }}</title>
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'app/css/delete_style.css' %}"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'app/css/delete_style.css' %}"> --
 </head>
 <body>
     <div class="confirmation-container">
@@ -13,8 +13,11 @@
         <form action="" method="post" style="display:inline;">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Confirm</button>
+            <button onclick="window.location.href='{% url 'index' %}'" class="btn btn-secondary">Cancel</button>
+
         </form>
-        <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+        <button><a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a></button>
+    
     </div>
     
     
@@ -23,4 +26,4 @@
 </body>
 </html>
 
-
+ -->

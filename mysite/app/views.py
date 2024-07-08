@@ -80,7 +80,7 @@ def delete_item(request, city):
     return render(request, 'delete.html', {'city': city})
 
 
-def get_current_location_weather(request, api_key, current_weather_url):
+def get_current_location_weather(api_key, current_weather_url):
     try:
         url = 'https://ipinfo.io/json'
         response = urlopen(url)
@@ -91,7 +91,6 @@ def get_current_location_weather(request, api_key, current_weather_url):
         else:
             return None
     except Exception as e:
-        messages.error(request, "Please try again.")
         return None
 
 

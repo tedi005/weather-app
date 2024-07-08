@@ -11,7 +11,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'app/css/style.css' %}">
     <!-- the favicon -->
     <link rel="shortcut icon" type="image/png" href="{% static 'app/favicon/favicon.png' %}" >
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -31,8 +30,6 @@
         <span id="hrs">00</span>
         <span>:</span>
         <span id="min">00</span>
-        <span>:</span>
-        <span id="sec">00</span>
     </div>
     <form method="POST" class="form">
         {% csrf_token %}
@@ -42,19 +39,11 @@
         <button type="submit" value="Submit" name="current-location">get current weather</button>
     </form>
 
-    <div>
-    </div>
 
     <div class="container">
-        <div class="city-container">
-            
-            {% if weather_data %}
-                    <div class="weather-results">
-                        {% include 'weather.html' with weather_data=weather_data %}
-                    </div>
-           
-            {% endif %}
-        </div>
+        {% if weather_data %}
+                    {% include 'weather.html' with weather_data=weather_data %}
+        {% endif %}
     </div>
 
 
@@ -72,18 +61,16 @@
     
         let hrs = document.getElementById('hrs');
         let min = document.getElementById('min');
-        let sec = document.getElementById('sec');
     
         function updateTime() {
             let currentTime = new Date();
             hrs.innerHTML = formatTime(currentTime.getHours());
             min.innerHTML = formatTime(currentTime.getMinutes());
-            sec.innerHTML = formatTime(currentTime.getSeconds());
-        }
+5        }
     
         setInterval(updateTime, 1000);
         updateTime(); // initial call to display the time immediately
     </script>
-    
+
 </body>
 </html>
