@@ -42,11 +42,11 @@ form button {
 .icon-container{
     margin:5px;
     display: flex;
-    gap: 40px;
+    gap: 100px;
     
 }
 .icon-container button{
-    height: 25px;
+    height: 35px;
     width: 300px;
 }
 

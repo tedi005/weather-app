@@ -3,6 +3,12 @@
         <div class="weather-results">
             <div class="icon-container">
                 <button onclick= window.location.href="{% url  'see_more' weather.city %}" class="btn btn-secondary">See More</button>
+                <div class="clock">
+                    <span id="hrs-{{ weather.city }}">00</span><span>:</span><span id="min-{{ weather.city }}">00</span> <span id="period-{{ weather.city }}">AM</span>
+                </div>
+                <!-- <div class="clock">
+                    <span id="hrs">00</span><span>:</span><span id="min">00</span>
+                </div> -->
                 <!-- <a class="eye-icon" href="{% url 'see_more' weather.city %}"><button>see more</button></a> -->
                 <button id="delete-button-{{ weather.city }}" class="button-danger">Delete</button>
             </div>
@@ -64,41 +70,153 @@
 </style>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    var modal = document.getElementById("delete-modal");
-    var modalBody = document.getElementById("modal-body");
-    var closeButton = document.getElementsByClassName("close-button")[0];
+    document.addEventListener("DOMContentLoaded", function() {
+        var modal = document.getElementById("delete-modal");
+        var modalBody = document.getElementById("modal-body");
+        var closeButton = document.getElementsByClassName("close-button")[0];
 
-    // Attach click event to each delete button
-    {% for weather in weather_data %}
-        document.getElementById('delete-button-{{ weather.city }}').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent default link behavior
-            // Set the modal content
-            modalBody.innerHTML = `
-                <h2>Are you sure you want to delete {{ weather.city }}?</h2>
-                <form action="{% url 'delete' weather.city %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Confirm</button>
-                    <button type="button" onclick="window.location.href='{% url 'index' %}'" class="btn btn-secondary">Cancel</button>
-                </form>
-            `;
-            // Display the modal
-            modal.style.display = 'block';});
-    {% endfor %}
+        // Function to format time with leading zeros
+        function formatTime(value) {
+            return value < 10 ? '0' + value : value;
+        }
 
-    // Close the modal when the close button is clicked
-    closeButton.onclick = function() {
-        modal.style.display = "none";
-    }
+        // Function to update the city time display
+        function updateCityTime(timeZone, hrsElement, minElement, periodElement) {
+            let options = { timeZone: timeZone, hour: '2-digit', minute: '2-digit', hour12: true };
+            let formatter = new Intl.DateTimeFormat([], options);
+            let currentTime = formatter.formatToParts(new Date());
 
-    // Close the modal when the user clicks outside the modal
-    window.onclick = function(event) {
-        if (event.target == modal) {
+            let hours, minutes, period;
+            currentTime.forEach(part => {
+                if (part.type === 'hour') hours = part.value;
+                if (part.type === 'minute') minutes = part.value;
+                if (part.type === 'dayPeriod') period = part.value;
+            });
+
+            // Update the city time display in the specified format
+            hrsElement.innerHTML = formatTime(parseInt(hours)); // Convert hours to integer and format
+            minElement.innerHTML = formatTime(parseInt(minutes)); // Convert minutes to integer and format
+            periodElement.innerHTML = period.toUpperCase(); // Display AM/PM in uppercase
+        }
+
+        // Function to get the IANA time zone identifier from city and country
+        function getTimeZoneIdentifier(city, country) {
+            const cityTimeZones = {
+                'New York': 'America/New_York',
+                'London': 'Europe/London',
+                'Tokyo': 'Asia/Tokyo',
+                'Tirana': 'Europe/Tirane',
+                'Basel': 'Europe/Zurich'
+                // Add more city-time zone mappings as needed
+            };
+            return cityTimeZones[city] || 'UTC';
+        }
+
+        // Function to get continent based on country code
+        function getContinent(countryCode) {
+            const continentMap = {
+                'New York': 'America/New_York',
+                'Los Angeles': 'America/Los_Angeles',
+                'Chicago': 'America/Chicago',
+                'London': 'Europe/London',
+                'Paris': 'Europe/Paris',
+                'Berlin': 'Europe/Berlin',
+                'Tokyo': 'Asia/Tokyo',
+                'Sydney': 'Australia/Sydney',
+                'Moscow': 'Europe/Moscow',
+                'Beijing': 'Asia/Shanghai',
+                'Dubai': 'Asia/Dubai',
+                'Singapore': 'Asia/Singapore',
+                'Hong Kong': 'Asia/Hong_Kong',
+                'Seoul': 'Asia/Seoul',
+                'Toronto': 'America/Toronto',
+                'Mexico City': 'America/Mexico_City',
+                'Sao Paulo': 'America/Sao_Paulo',
+                'Mumbai': 'Asia/Kolkata',
+                'Cairo': 'Africa/Cairo',
+                'Johannesburg': 'Africa/Johannesburg',
+                'Buenos Aires': 'America/Argentina/Buenos_Aires',
+                'Auckland': 'Pacific/Auckland',
+                'Wellington': 'Pacific/Chatham',
+                'Hawaii': 'Pacific/Honolulu'
+            };
+
+            const countryToContinent = {
+                'AF': 'AS', 'AX': 'EU', 'AL': 'EU', 'DZ': 'AF', 'AS': 'OC', 'AD': 'EU', 'AO': 'AF', 'AI': 'NA', 'AQ': 'AN', 'AG': 'NA', 
+                'AR': 'SA', 'AM': 'AS', 'AW': 'NA', 'AU': 'OC', 'AT': 'EU', 'AZ': 'AS', 'BS': 'NA', 'BH': 'AS', 'BD': 'AS', 'BB': 'NA', 
+                'BY': 'EU', 'BE': 'EU', 'BZ': 'NA', 'BJ': 'AF', 'BM': 'NA', 'BT': 'AS', 'BO': 'SA', 'BA': 'EU', 'BW': 'AF', 'BV': 'AN', 
+                'BR': 'SA', 'IO': 'AS', 'BN': 'AS', 'BG': 'EU', 'BF': 'AF', 'BI': 'AF', 'KH': 'AS', 'CM': 'AF', 'CA': 'NA', 'CV': 'AF', 
+                'KY': 'NA', 'CF': 'AF', 'TD': 'AF', 'CL': 'SA', 'CN': 'AS', 'CX': 'AS', 'CC': 'AS', 'CO': 'SA', 'KM': 'AF', 'CG': 'AF', 
+                'CD': 'AF', 'CK': 'OC', 'CR': 'NA', 'CI': 'AF', 'HR': 'EU', 'CU': 'NA', 'CY': 'AS', 'CZ': 'EU', 'DK': 'EU', 'DJ': 'AF', 
+                'DM': 'NA', 'DO': 'NA', 'EC': 'SA', 'EG': 'AF', 'SV': 'NA', 'GQ': 'AF', 'ER': 'AF', 'EE': 'EU', 'SZ': 'AF', 'ET': 'AF', 
+                'FK': 'SA', 'FO': 'EU', 'FJ': 'OC', 'FI': 'EU', 'FR': 'EU', 'GF': 'SA', 'PF': 'OC', 'TF': 'AN', 'GA': 'AF', 'GM': 'AF', 
+                'GE': 'AS', 'DE': 'EU', 'GH': 'AF', 'GI': 'EU', 'GR': 'EU', 'GL': 'NA', 'GD': 'NA', 'GP': 'NA', 'GU': 'OC', 'GT': 'NA', 
+                'GG': 'EU', 'GN': 'AF', 'GW': 'AF', 'GY': 'SA', 'HT': 'NA', 'HM': 'AN', 'VA': 'EU', 'HN': 'NA', 'HK': 'AS', 'HU': 'EU', 
+                'IS': 'EU', 'IN': 'AS', 'ID': 'AS', 'IR': 'AS', 'IQ': 'AS', 'IE': 'EU', 'IM': 'EU', 'IL': 'AS', 'IT': 'EU', 'JM': 'NA', 
+                'JP': 'AS', 'JE': 'EU', 'JO': 'AS', 'KZ': 'AS', 'KE': 'AF', 'KI': 'OC', 'KP': 'AS', 'KR': 'AS', 'KW': 'AS', 'KG': 'AS', 
+                'LA': 'AS', 'LV': 'EU', 'LB': 'AS', 'LS': 'AF', 'LR': 'AF', 'LY': 'AF', 'LI': 'EU', 'LT': 'EU', 'LU': 'EU', 'MO': 'AS', 
+                'MK': 'EU', 'MG': 'AF', 'MW': 'AF', 'MY': 'AS', 'MV': 'AS', 'ML': 'AF', 'MT': 'EU', 'MH': 'OC', 'MQ': 'NA', 'MR': 'AF', 
+                'MU': 'AF', 'YT': 'AF', 'MX': 'NA', 'FM': 'OC', 'MD': 'EU', 'MC
+            };
+
+            return continentMap[countryToContinent[countryCode]] || 'Unknown';
+        }
+
+        // Attach click event to each delete button and set up the clocks
+        {% for weather in weather_data %}
+            (function(weather) {
+                var deleteButton = document.getElementById('delete-button-{{ weather.city }}');
+                deleteButton.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default link behavior
+                    // Set the modal content
+                    modalBody.innerHTML = `
+                        <h2>Are you sure you want to delete ${weather.city}?</h2>
+                        <form action="{% url 'delete' weather.city %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Confirm</button>
+                            <button type="button" onclick="window.location.href='{% url 'index' %}'" class="btn btn-secondary">Cancel</button>
+                        </form>
+                    `;
+                    // Display the modal
+                    modal.style.display = 'block';
+                });
+
+                // Display the initial time for this weather entry
+                var cityHrs = document.getElementById('hrs-{{ weather.city }}');
+                var cityMin = document.getElementById('min-{{ weather.city }}');
+                var cityPeriod = document.getElementById('period-{{ weather.city }}');
+
+                if (weather.timezone !== undefined) {
+                    var timeZoneIdentifier = getTimeZoneIdentifier(weather.city, weather.country);
+                    console.log('Time zone identifier for', weather.city + ':', timeZoneIdentifier);
+
+                    updateCityTime(timeZoneIdentifier, cityHrs, cityMin, cityPeriod);
+                    setInterval(() => updateCityTime(timeZoneIdentifier, cityHrs, cityMin, cityPeriod), 1000);
+
+                    var continent = getContinent(weather.country);
+                    console.log('Continent for', weather.city + ':', continent);
+                } else {
+                    console.log('Invalid or missing timezone data for', weather.city);
+                }
+            })({{ weather|safe }}); // Pass each weather object into the IIFE
+        {% endfor %}
+
+        // Close the modal when the close button is clicked
+        closeButton.onclick = function() {
             modal.style.display = "none";
         }
-    }
-});
+
+        // Close the modal when the user clicks outside the modal
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    });
 </script>
+
+
+
 
 
 
