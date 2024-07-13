@@ -62,6 +62,8 @@ def fetch_weather(city, api_key, current_weather_url):
         'wind_deg': response['wind']['deg'],
         'clouds': response['clouds']['all'],
         'timezone': response['timezone'],
+        'lat': response['coord']['lat'], 
+        'lon': response['coord']['lon'],
         
    
 

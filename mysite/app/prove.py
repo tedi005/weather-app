@@ -1,9 +1,12 @@
 import requests
 import datetime
+from urllib.request import urlopen
+import json
+import math
 
 api_key = '21a80af226771c512fda9aa0a28d0b9b'
 current_weather_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric'
-city = 'Basel'
+city = 'Tirana'
 
 
 response = requests.get(current_weather_url.format(city, api_key)).json()
@@ -25,14 +28,67 @@ weather_data = {
     'wind_speed': response['wind']['speed'],
     'wind_deg': response['wind']['deg'],
     'clouds': response['clouds']['all'],
-    # 'coords':{
-    #     'lat': response['coord']['lat'], 
-    #     'lon': response['coord']['lon'],
+    'lat': response['coord']['lat'], 
+    'lon': response['coord']['lon'],
     # },
     # 'timezone': response['timezone']
 }
 
-# print(weather_data)
+
+import math
+from datetime import datetime, timedelta
+import pytz
+from timezonefinder import TimezoneFinder
+
+def calculate_timezone_offset(longitude):
+    # Divide the longitude by 15 to get the raw offset in hours
+    raw_offset = longitude / 15
+    
+    # Take the floor of the result to get the nearest hour
+    nearest_hour = math.floor(raw_offset)
+    
+    # Adjust the result to be within the range of -12 to 12
+    if nearest_hour < -12:
+        nearest_hour += 24
+    elif nearest_hour > 12:
+        nearest_hour -= 24
+    
+    return nearest_hour
+
+def calculate_local_time(latitude, longitude):
+    # Calculate the timezone offset
+    timezone_offset = calculate_timezone_offset(longitude)
+    
+    # Get the current UTC time
+    utc_time = datetime.utcnow()
+    
+    # Calculate the local time by adding the timezone offset
+    local_time = utc_time + timedelta(hours=timezone_offset)
+    
+    # Adjust for DST using timezonefinder and pytz
+    tf = TimezoneFinder()
+    timezone_str = tf.timezone_at(lat=latitude, lng=longitude)
+    
+    if timezone_str:
+        timezone = pytz.timezone(timezone_str)
+        local_time = timezone.localize(local_time)
+        local_time = local_time.astimezone(timezone)
+    
+    # Format the local time to show time and AM/PM
+    formatted_time = local_time.strftime('%I:%M %p')
+    
+    return formatted_time
+
+# Example usage:
+latitude = 40.7128   # Latitude of New York City
+longitude = -74.0060 # Longitude of New York City
+
+local_time = calculate_local_time(latitude, longitude)
+print(f"time: {local_time}")
+
+
+
+
 
 
 # # Function to convert Unix timestamp to human-readable time
