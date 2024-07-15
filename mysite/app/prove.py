@@ -31,61 +31,63 @@ weather_data = {
     'lat': response['coord']['lat'], 
     'lon': response['coord']['lon'],
     # },
-    # 'timezone': response['timezone']
+    'timezone': response['timezone']
 }
 
-
+# print(weather_data)
 import math
 from datetime import datetime, timedelta
 import pytz
-from timezonefinder import TimezoneFinder
+# import TimezoneFinder
 
-def calculate_timezone_offset(longitude):
-    # Divide the longitude by 15 to get the raw offset in hours
-    raw_offset = longitude / 15
+# def calculate_timezone_offset(longitude):
+#     # Divide the longitude by 15 to get the raw offset in hours
+#     raw_offset = longitude / 15
     
-    # Take the floor of the result to get the nearest hour
-    nearest_hour = math.floor(raw_offset)
+#     # Take the floor of the result to get the nearest hour
+#     nearest_hour = math.floor(raw_offset)
     
-    # Adjust the result to be within the range of -12 to 12
-    if nearest_hour < -12:
-        nearest_hour += 24
-    elif nearest_hour > 12:
-        nearest_hour -= 24
+#     # Adjust the result to be within the range of -12 to 12
+#     if nearest_hour < -12:
+#         nearest_hour += 24
+#     elif nearest_hour > 12:
+#         nearest_hour -= 24
     
-    return nearest_hour
+#     return nearest_hour
 
-def calculate_local_time(latitude, longitude):
-    # Calculate the timezone offset
-    timezone_offset = calculate_timezone_offset(longitude)
+# def calculate_local_time(latitude, longitude):
+#     # Calculate the timezone offset
+#     timezone_offset = calculate_timezone_offset(longitude)
     
-    # Get the current UTC time
-    utc_time = datetime.utcnow()
-    
-    # Calculate the local time by adding the timezone offset
-    local_time = utc_time + timedelta(hours=timezone_offset)
-    
-    # Adjust for DST using timezonefinder and pytz
-    tf = TimezoneFinder()
-    timezone_str = tf.timezone_at(lat=latitude, lng=longitude)
-    
-    if timezone_str:
-        timezone = pytz.timezone(timezone_str)
-        local_time = timezone.localize(local_time)
-        local_time = local_time.astimezone(timezone)
-    
-    # Format the local time to show time and AM/PM
-    formatted_time = local_time.strftime('%I:%M %p')
-    
-    return formatted_time
+#     # Get the current UTC time
+#     utc_time = datetime.utcnow()
+#     # print(utc_time)
 
-# Example usage:
-latitude = 40.7128   # Latitude of New York City
-longitude = -74.0060 # Longitude of New York City
+    
+#     # Calculate the local time by adding the timezone offset
+#     local_time = utc_time + timedelta(hours=timezone_offset)
+#     print(timedelta(hours=timezone_offset))
+    
+#     # Adjust for DST using timezonefinder and pytz
+#     tf = TimezoneFinder()
+#     timezone_str = tf.timezone_at(lat=latitude, lng=longitude)
+    
+#     if timezone_str:
+#         timezone = pytz.timezone(timezone_str)
+#         local_time = timezone.localize(local_time)
+#         local_time = local_time.astimezone(timezone)
+    
+#     # Format the local time to show time and AM/PM
+#     formatted_time = local_time.strftime('%I:%M %p')
+    
+#     return formatted_time
 
-local_time = calculate_local_time(latitude, longitude)
-print(f"time: {local_time}")
+# # Example usage:
+# latitude = 40.7128   # Latitude of New York City
+# longitude = -74.0060 # Longitude of New York City
 
+# local_time = calculate_local_time(latitude, longitude)
+# # print(f"time: {local_time}")
 
 
 
@@ -125,3 +127,23 @@ print(f"time: {local_time}")
  'sys': {'type': 1, 'id': 4610, 'country': 'US', 'sunrise': 1720517607, 'sunset': 1720571327}, 
  'timezone': -14400, 'id': 5128581, 'name': 'New York', 'cod': 200}
 """
+
+
+
+# import pytz
+# from datetime import datetime
+
+# # The timestamp
+# timestamp = 1721077949
+
+# # Convert timestamp to datetime object in UTC
+# dt_utc = datetime.utcfromtimestamp(timestamp).replace(tzinfo=pytz.utc)
+
+# # Define the timezone for the chosen city (example: New York)
+# city_timezone = pytz.timezone('Europe/Tirane')
+
+# # Convert the datetime object to the chosen city's timezone
+# dt_city = dt_utc.astimezone(city_timezone)
+
+# # Print the result
+# print("Date and time in the chosen city:", dt_city.strftime('%Y-%m-%d %H:%M:%S %Z%z'))
