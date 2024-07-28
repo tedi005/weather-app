@@ -69,11 +69,14 @@
     
 }
 </style>
+
 <!-- <script id="weather-data" type="application/json">
     {{ weather_data|json_script:"weather-data" }}
 </script> -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        const DateTime = luxon.DateTime;
+
         var modal = document.getElementById("delete-modal");
         var modalBody = document.getElementById("modal-body");
         var closeButton = document.getElementsByClassName("close-button")[0];
@@ -124,14 +127,12 @@
         // Extracting the city value
         weatherData.forEach(weather => {
             const city = weather.city;
-            const timezoneOffset = weather.timezone; // offset in seconds from UTC
+            const offsetInHours = weather.timezone / (60 * 60); // offset in seconds from UTC
+            const zone = offsetInHours > 0 ? `UTC+${offsetInHours}` : `UTC${offsetInHours}`;
+
 
             console.log("City:", city);
-            console.log("Timezone Offset:", timezoneOffset);
-
-            // Get the local time using the timezone offset
-            const formattedLocalTime = getLocalTime(timezoneOffset);
-            console.log(`Local time for ${city}: ${formattedLocalTime}`);
+            console.log(`Local time for ${city}:`, DateTime.utc().setZone(zone).toISO());
         });
     });
 </script>
