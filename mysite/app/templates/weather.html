@@ -125,105 +125,24 @@
 
         // Log the entire weatherData for debugging
         // Extracting the city value
+        // weatherData.forEach(weather => {
+        //     const city = weather.city;
+        //     const offsetInHours = weather.timezone / (60 * 60); // offset in seconds from UTC
+        //     const zone = offsetInHours > 0 ? `UTC+${offsetInHours}` : `UTC${offsetInHours}`;
+
+
+        //     console.log("City:", city);
+        //     console.log(`Local time for ${city}:`, DateTime.utc().setZone(zone).toISO());
+
         weatherData.forEach(weather => {
             const city = weather.city;
             const offsetInHours = weather.timezone / (60 * 60); // offset in seconds from UTC
             const zone = offsetInHours > 0 ? `UTC+${offsetInHours}` : `UTC${offsetInHours}`;
 
+            const localTime = DateTime.utc().setZone(zone).toFormat('yyyy-MM-dd HH:mm');
 
             console.log("City:", city);
-            console.log(`Local time for ${city}:`, DateTime.utc().setZone(zone).toISO());
+            console.log(`Local time for ${city}:`, localTime);
         });
     });
 </script>
-<!-- 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var modal = document.getElementById("delete-modal");
-        var modalBody = document.getElementById("modal-body");
-        var closeButton = document.getElementsByClassName("close-button")[0];
-
-        // Attach click event to each delete button
-        {% for weather in weather_data %}
-            (function(city) {
-                document.getElementById('delete-button-{{ weather.city }}').addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevent default link behavior
-                    // Set the modal content
-                    modalBody.innerHTML = `
-                        <h2>Are you sure you want to delete ${city}?</h2>
-                        <form action="{% url 'delete' weather.city %}" method="post" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger">Confirm</button>
-                            <button type="button" onclick="window.location.href='{% url 'index' %}'" class="btn btn-secondary">Cancel</button>
-                        </form>
-                    `;
-                    // Display the modal
-                    modal.style.display = 'block';
-                });
-            })("{{ weather.city }}");
-        {% endfor %}
-
-        // Close the modal when the close button is clicked
-        closeButton.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // Close the modal when the user clicks outside the modal
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        // // Get the weather data from Django
-        const weatherData = {{ weather_data|safe }};
-        
-
-        function getLocalTime(timezoneOffset) {
-            const now = new Date();
-            // Convert timezone offset from seconds to milliseconds
-            const localTime = new Date(now.getTime() + timezoneOffset * 1000);
-            return localTime.toLocaleString();
-        }
-
-        // Log the entire weatherData for debugging
-        // Extracting the city value
-        weatherData.forEach(weather => {
-                const longitude = weather.lon;
-                const latitude = weather.lat;
-                const timezoneOffset = weather.timezone; // offset in seconds from UTC
-
-                console.log("timezone:", timezoneOffset);
-                console.log("Longitude:", longitude);
-                console.log("Latitude:", latitude);
-
-
-                // Get the local time using the timezone offset
-                const formattedLocalTime = getLocalTime(timezoneOffset);
-
-                
-
-                console.log(`Local time: ${formattedLocalTime}`);
-                
-                // // Get the current time in UTC
-                // const now = new Date();
-                
-                // // Convert the current time to the local time using the timezone offset
-                // const localTime = new Date(now.getTime() + timezoneOffset * 1000);
-                
-                // // Format the local time as needed (e.g., toISOString, toLocaleString, etc.)
-                // const formattedLocalTime = localTime.toLocaleString();
-
-                // console.log(`local time: ${formattedLocalTime}`);
-        });
-
-    });
-</script> -->
-
-
-
-
-
-
-
-
