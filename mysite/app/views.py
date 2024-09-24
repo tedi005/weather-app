@@ -3,10 +3,13 @@ import requests
 from django.contrib import messages
 from urllib.request import urlopen
 import json
+from pathlib import Path
+
 
 
 def index(request):
-    api_key = '21a80af226771c512fda9aa0a28d0b9b'
+    api_key_path = Path(__file__).parent / 'file.txt'
+    api_key = api_key_path.read_text().strip()
     current_weather_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric'
 
     if 'weather_data' not in request.session:
@@ -29,7 +32,7 @@ def index(request):
         else:
             messages.info(request, "City not found!")
             
-        # Redirect to the same page to prevent form resubmission
+        # Redirect to the same page to prevent resub
         return redirect('index')
     
     context = {

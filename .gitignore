@@ -1,2 +1,6 @@
-# ignore ven folder
+# ignore venv folder
 venv/
+
+#ignore the api key file
+file.txt
+
