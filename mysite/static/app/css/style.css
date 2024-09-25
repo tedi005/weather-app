@@ -50,19 +50,6 @@ form button {
     width: 300px;
 }
 
-/* the icons */
-/* .icon-container{
-    margin: 5px;
-} */
-
-
-/* the weather items */
-/* .icon-container {
-    display: flex;
-    gap: 80px; /* Adjust the gap as needed *
-    align-items: center; /* Aligns items vertically *
-} */
-
 .weather-results {
     background-color: white;
     border: 1px solid #f3ecec;
