@@ -131,7 +131,7 @@ gap: 10px; /* Adds space between elements */
             const localTime = new Date(now.getTime() + timezoneOffset * 1000);
             return localTime.toLocaleString();
         }
-        
+
         weatherData.forEach(weather => {
             const city = weather.city;
             const offsetInHours = weather.timezone / (60 * 60); // offset in seconds from UTC
