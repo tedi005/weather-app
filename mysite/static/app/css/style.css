@@ -1,9 +1,9 @@
-body {
+/* body {
     font-family: Arial, sans-serif;
     background-color: #b4a0a0;
     text-align: center;
     padding: 50px;
-    position: relative; /* Add this */
+    position: relative; /* Add this 
 }
 
 form {
@@ -33,7 +33,7 @@ form button {
 .container {
     border-radius: 10px;
     position: relative;
-    margin: 0 auto; /* Center the container */
+    margin: 0 auto; /* Center the container *
     width: 450px;
     height: 300px;
     
@@ -68,17 +68,17 @@ form button {
 }
 
 
-/* Messages */
+/* Messages *
 .messages {
     list-style-type: none;
     padding: 0;
     margin: 10px 0;
-    position: absolute; /* Change to absolute */
-    top: 10px; /* Adjust as needed */
+    position: absolute; /* Change to absolute 
+    top: 10px; /* Adjust as needed 
     left: 50%;
     transform: translateX(-50%);
-    width: 350px; /* Adjust width as needed */
-    z-index: 1000; /* Ensure it is above other elements */
+    width: 350px; /* Adjust width as needed 
+    z-index: 1000; /* Ensure it is above other elements 
 }
 
 .messages li {
@@ -134,12 +134,12 @@ form button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    text-decoration: none; /* Ensure no underline */
-    display: inline-block; /* Ensures the anchor is displayed like a button */
+    text-decoration: none; /* Ensure no underline 
+    display: inline-block; /* Ensures the anchor is displayed like a button 
 }
 
 .custom-button:hover {
-    background-color: #7d887d; /* Optional: Darker shade for hover effect */
+    background-color: #7d887d; /* Optional: Darker shade for hover effect 
 }
 
 
@@ -151,26 +151,26 @@ form button {
 
 
 .hover-button {
-    position: relative; /* Ensure the button is positioned relative */
+    position: relative; /* Ensure the button is positioned relative 
     padding: 10px 20px;
     font-size: 10px;
     cursor: pointer;
 }
 
 .hover-text {
-    display: none; /* Hide the text initially */
+    display: none; /* Hide the text initially 
     position: absolute;
-    bottom: 60px; /* Position it above the button */
-    left: 50%; /* Center it horizontally */
-    transform: translateX(-50%); /* Center the text */
+    bottom: 60px; /* Position it above the button 
+    left: 50%; /* Center it horizontally 
+    transform: translateX(-50%); /* Center the text 
     background-color: #f0f0f0;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
     z-index: 1;
-    white-space: nowrap; /* Prevent text from wrapping */
+    white-space: nowrap; /* Prevent text from wrapping 
 }
 
 .hover-button:hover + .hover-text {
-    display: block; /* Show the text on hover */
-}
+    display: block; /* Show the text on hover 
+} */
