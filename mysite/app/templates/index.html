@@ -1,38 +1,47 @@
 {% extends "base.html" %}
+{% load static %}
 
 
 {% block title %}Weather App{% endblock %}
 
 {% block content %}
 
-    <div class="clock">
-        <span id="hrs">00</span>
-        <span>:</span>
-        <span id="min">00</span>
-        <span id="am"></span>
+    <div class="items">
+        <div class="clock">
+            <span id="hrs">00</span>
+            <span>:</span>
+            <span id="min">00</span>
+            <span>:</span>
+            <span id="sec">00</span>
+            <span id="am"></span>
+
+        </div>
+        <form method="POST" class="form">
+            {% csrf_token %}
+            <input class="" type="text" name="user_data" placeholder="Search City" aria-label="Search">
+            <button type="submit" value="Submit">submit</button> 
+
+            <button type="submit" value="Submit" name="current-location" >
+                <i class="fa-solid fa-location-dot"></i>
+            </button>
+            <div class="hover-text">get weather of current location</div>
+            <!-- <button type="submit" value="Submit" name="current-location">get current weather</button> -->
+        </form>
+
+
+        <div class="container">
+            {% if weather_data %}
+                        {% include 'weather.html' with weather_data=weather_data %}
+            {% endif %}
+        </div>
+
     </div>
-    <form method="POST" class="form">
-        {% csrf_token %}
-        
-        <input class="" type="text" name="user_data" placeholder="Search City" aria-label="Search">
-        <button type="submit" value="Submit">submit</button> 
-
-        <button type="button" class="hover-button" >
-            <i class="fa-solid fa-location-dot"></i>
-        </button>
-        <div class="hover-text">get weather of current location</div>
-        <button type="submit" value="Submit" name="current-location">get current weather</button>
-    </form>
+    <!-- External JS file -->
+    <script type="text/javascript" src="{% static 'app/js/scripts.js' %}"></script>
 
 
-    <div class="container">
-        {% if weather_data %}
-                    {% include 'weather.html' with weather_data=weather_data %}
-        {% endif %}
-    </div>
 
-
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             // messages timeout for 3 seconds
             setTimeout(function() {
@@ -48,17 +57,19 @@
             let currentTime = new Date();
             let hours = currentTime.getHours();
             let minutes = currentTime.getMinutes();
+            let seconds = currentTime.getSeconds();
             let ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12;
             hours = hours ? hours : 12; // the hour '0' should be '12'
     
             document.getElementById('hrs').innerHTML = formatTime(hours);
             document.getElementById('min').innerHTML = formatTime(minutes);
+            document.getElementById('sec').innerHTML = formatTime(seconds);
             document.getElementById('am').innerHTML = ampm;
         }
     
         setInterval(updateTime, 1000);
         updateTime(); // initial call to display the time immediately
-    </script>
+    </script> -->
 
 {% endblock %}

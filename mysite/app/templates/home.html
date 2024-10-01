@@ -1,0 +1,108 @@
+<!-- {% extends 'base.html' %}
+{% block title %} Weather App Home {% endblock %}
+
+{% block  content %}
+
+    <button class="icon-button">
+        <img src="{% static 'app/img/plus_solid.svg' %}" alt="Plus Icon">
+        <i class="fas fa-cloud-sun"></i>
+    </button>
+
+{% endblock %}   -->
+
+    <!-- <button style='width: 50px; height: 50px;'><img src="{% static 'app/img/plus_solid.svg' %}" > <i class='fas fa-cloud-sun'></i>   -->
+    <!-- <form method="POST" class="form" action="">
+        {% csrf_token %}
+        <input class="" type="text" name="user_data" placeholder="Search City" aria-label="Search">
+        <button type="submit" value="">add city</button>
+    </form> -->
+<!-- <h1>hello</h1> -->
+    <!-- <form method="POST">
+        {% csrf_token %}
+        <div class="field has-addons">
+            <div class="control is-expanded">
+                <input class="" type="text" name="user_data" placeholder="Search City" aria-label="Search">
+            </div>
+            <div class="control">
+                <button type="submit"  class="button is-info">
+                    Add City
+                </button>
+            </div>
+        </div>
+        {% if message %}
+            <div class="notification {{ message_class }}">{{ message }}</div>
+        {% endif %}
+    </form> -->
+
+<!-- <section class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                What's the weather like?
+            </h1>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-offset-4 is-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            {{form.name}}
+                        </div>
+                        <div class="control">
+                            <button type="submit"  class="button is-info">
+                                Add City
+                            </button>
+                        </div>
+                    </div>
+                    {% if message %}
+                        <div class="notification {{ message_class }}">{{ message }}</div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-offset-4 is-4">
+               {% for city_weather in weather_data %} 
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-50x50">
+                                <img src="http://openweathermap.org/img/w/{{city_weather.icon}}.png" alt="Image"b 7>
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="title">{{city_weather.city}}</span>
+                                    <br>
+                                    <span class="subtitle">{{city_weather.temperature}}° C</span>
+                                    <br> {{city_weather.description}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="media-right">
+                            <a href="{% url 'delete_city' city_weather.city %}">
+                               <button class="delete"></button>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+  -->
+
+
+
+
