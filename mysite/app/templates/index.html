@@ -5,6 +5,16 @@
 {% block title %}Weather App{% endblock %}
 
 {% block content %}
+    <!-- Messages Section -->
+    <!-- {% if messages %} -->
+        <ul class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    <!-- {% endif %} -->
 
     <div class="items">
         <div class="clock">

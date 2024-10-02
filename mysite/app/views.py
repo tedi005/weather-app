@@ -12,9 +12,9 @@ def index(request):
     api_key = api_key_path.read_text().strip()
     current_weather_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric'
 
+    # Ensure session weather data exists
     if 'weather_data' not in request.session:
         request.session['weather_data'] = []
-
 
     if request.method == 'POST':
         if 'current-location' in request.POST:
@@ -22,25 +22,30 @@ def index(request):
         else:
             city = request.POST['user_data']
             weather_data = fetch_weather(city, api_key, current_weather_url)
+            
         if weather_data:
             weather_data_list = request.session['weather_data']
+            
+            # Check if the city is already in the session data
             if weather_data not in weather_data_list:
                 weather_data_list.append(weather_data)
                 request.session['weather_data'] = weather_data_list
+                messages.success(request, f"City {weather_data['city']} added successfully!")
             else:
                 messages.info(request, "City already added!")
         else:
-            messages.info(request, "City not found!")
-            
-        # Redirect to the same page to prevent resub
+            messages.error(request, "City not found!")
+
+        # Redirect to the same page to prevent form resubmission
         return redirect('index')
-    
+
+    # Pass session weather data to template
     context = {
         'weather_data': request.session['weather_data'],
-        
     }
 
     return render(request, 'index.html', context)
+
 
 def fetch_weather(city, api_key, current_weather_url):
     response = requests.get(current_weather_url.format(city, api_key)).json()
@@ -78,6 +83,8 @@ def delete_item(request, city):
         weather_data = request.session.get('weather_data', [])
         updated_weather_data = [weather for weather in weather_data if weather['city'] != city]
         request.session['weather_data'] = updated_weather_data
+        messages.success(request, f"City \"{city}\" was successfully removed")
+
         return redirect('index')
     
     # Handle GET request to show the delete confirmation page
