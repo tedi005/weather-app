@@ -1,19 +1,19 @@
+{% load static %}
 {% if weather_data %}
     {% for weather in weather_data %}
         <div class="weather-results">
             <div class="icon-container">
-                <button onclick= window.location.href="{% url  'see_more' weather.city %}" class="btn btn-secondary">See More</button>
+                <button onclick="window.location.href='{% url 'see_more' weather.city %}'" type="button" class="btn btn-outline-danger">See More</button>
                 <p id="local-time-{{ weather.city }}"></p>
                 <button id="delete-button-{{ weather.city }}" class="button-danger">Delete</button>
             </div>
             <h2>{{ weather.city | title }}</h2>
-            <p> {{ weather.temperature }}°C</p>
-            <p> {{ weather.description }}</p>
+            <p>{{ weather.temperature }}°C</p>
+            <p>{{ weather.description }}</p>
             <img src="http://openweathermap.org/img/wn/{{ weather.icon }}.png" alt="Weather icon">
         </div>
     {% endfor %}
 {% endif %}
-
 
 <div id="delete-modal" class="modal" style="display:none;">
     <div class="modal-content">
@@ -22,66 +22,14 @@
     </div>
 </div>
 
-<style>
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.4); 
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; 
-    padding: 20px;
-    border: 1px solid #888;
-    border-radius: 15px; 
-    width: 80%; 
-    width: 350px;
-    height: 150px;
-}
-
-.close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close-button:hover,
-.close-button:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-    
-}
-
-.icon-container {
-display: flex;
-align-items: center;
-justify-content: space-between; /* Adjusts the spacing between items */
-gap: 10px; /* Adds space between elements */
-
-}
-.icon-container button {
-    width: 100px; /* Set a fixed width for the buttons */
-    margin: 0;
-}
-
-.icon-container button {
-    margin: 0;
-}
 
 
-</style>
 
 
+<!-- <script type="text/javascript" src="{% static 'app/js/weather.js' %}"></script> -->
+
+ 
+ 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const DateTime = luxon.DateTime;
@@ -146,4 +94,4 @@ gap: 10px; /* Adds space between elements */
             console.log(`Local time for ${city}:`, localTime);
         });
     });
-</script>
+</script> 

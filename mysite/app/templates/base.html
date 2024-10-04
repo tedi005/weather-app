@@ -11,6 +11,8 @@
     <!-- css path -->
     <link rel="stylesheet" type="text/css" href="{% static 'app/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'app/css/see_more.css'%}"></link>
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/weather.css'%}"></link>
+
     <!-- the favicon -->
     <link rel="shortcut icon" type="image/png" href="{% static 'app/favicon/favicon.png' %}" >
 
@@ -20,18 +22,12 @@
     
     <!-- External JS file -->
     <script type="text/javascript" src="{% static 'app/js/scripts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'app/js/weather.js' %}"></script>
 
 </head>
 <body>
     {% block content %}
-        <!-- Messages -->
-        <!-- <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                    {{ message }}
-                </li>
-            {% endfor %}
-        </ul> -->
+
         
     {% endblock %}
 </body>
