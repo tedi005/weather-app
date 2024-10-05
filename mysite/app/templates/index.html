@@ -6,15 +6,15 @@
 
 {% block content %}
     <!-- Messages Section -->
-    <!-- {% if messages %} -->
-        <ul class="messages">
-            {% if messages %}
-                {% for message in messages %}
-                    <li class="{{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            {% endif %}
-        </ul>
-    <!-- {% endif %} -->
+    <ul class="messages">
+        {% if messages %}
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}   <button class="close-message" onclick="removeMessage(this)"><i class="fa fa-close"></i></button></li>   
+                
+            {% endfor %}
+        {% endif %}
+    </ul>
+    
 
     <div class="items">
         <div class="clock">
@@ -26,15 +26,32 @@
             <span id="am"></span>
 
         </div>
+        <div class="hover-text">get weather of current location</div>
         <form method="POST" class="form">
             {% csrf_token %}
-            <input class="" type="text" name="user_data" placeholder="Search City" aria-label="Search">
+            <div class="myitems">
+                <div class="searchBox">
+                    <input class="searchInput"type="text" name="user_data" placeholder="Search">
+                    <button type="submit"  class="searchButton" class="btn btn-primary" data-mdb-ripple-init>
+                        <i class="fas fa-search"></i>
+                    </button> 
+                </div>
+
+                <button type="submit" value="Submit" name="current-location" class="current-location" >
+                    <i class="fa-solid fa-location-dot"></i>
+                </button>
+                <div class="hover-text">get weather of current location</div>
+            </div>
+            <!-- <input class="" type="text" name="user_data" placeholder="Search City" aria-label="Search">
             <button type="submit" value="Submit">submit</button> 
 
-            <button type="submit" value="Submit" name="current-location" >
+            <button type="button" class="btn btn-primary" data-mdb-ripple-init>
+                <i class="fas fa-search"></i>
+              </button> -->
+            <!-- <button type="submit" value="Submit" name="current-location" >
                 <i class="fa-solid fa-location-dot"></i>
             </button>
-            <div class="hover-text">get weather of current location</div>
+            <div class="hover-text">get weather of current location</div> -->
             <!-- <button type="submit" value="Submit" name="current-location">get current weather</button> -->
         </form>
 
@@ -48,7 +65,13 @@
     </div>
     <!-- External JS file -->
     <script type="text/javascript" src="{% static 'app/js/scripts.js' %}"></script>
-    <!-- <script type="text/javascript" src="{% static 'app/js/weather.js' %}"></script> -->
+    <script>
+        function removeMessage(button) {
+        var messageItem = button.parentElement;
+        messageItem.style.display = 'none';
+    }
+
+    </script>
     
 
 

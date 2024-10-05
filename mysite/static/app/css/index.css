@@ -1,0 +1,150 @@
+body{
+    background: #ffffff;
+}
+
+.items{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10vw;
+}
+
+.clock{
+    font-size: 2.6vw;
+
+} 
+
+
+
+.myitems{
+    display: flex;
+    justify-content: space-between; /* Align items horizontally */
+    align-items: center; /* Align items vertically */
+    gap: 10px;
+}
+
+.searchBox {
+    background: #2f3640;
+    height: 400xpx;
+    width: 300px; /* Define the width */
+    border-radius: 40px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Static positioning */
+    position: static;
+    margin: 20px auto; /* Center horizontally */
+}
+
+.searchButton {
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2f3640;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+}
+
+.searchInput {
+    border: none;
+    background: none;
+    outline: none;
+    color: rgb(244, 240, 240);
+    font-size: 16px;
+    line-height: 10px;
+    width: 250px; /* Adjust width to fit the box */
+    transition: 0.7s;
+}
+
+
+.searchBox:hover > .searchButton {
+    background: #fbfcfd;
+    color : #000000;
+}
+
+
+.current-location {
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2f3640;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+}
+
+.current-location:hover {
+    background: #fbfcfd;
+    color : #000000;
+}
+
+
+
+.hover-text {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    position: absolute;
+    background-color: #000; /* Dark background for contrast */
+    color: #fff; /* White text color */
+    padding: 10px 15px; /* Bigger padding for a wider label */
+    border-radius: 4px;
+    top: -40px; /* Position above the button (adjust as necessary) */
+    left: 100%;
+    transform: translateX(-50%); /* Center the label horizontally */
+    white-space: nowrap; /* Ensure the text doesn't wrap */
+    font-size: 0.9em; /* Adjust font size as needed */
+}
+
+
+/* .myitems {
+    display: flex;
+    position: relative; /* Ensure the parent container is positioned *xx
+    justify-content: space-between; /* Align items horizontally *
+    align-items: center; /* Align items vertically *   gap: 10px;
+} 
+
+.current-location:hover + .hover-text {
+    opacity: 1; /* Show the hover text when button is hovered *
+}*/
+
+
+
+.messages {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.messages li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    color: white;
+    background-color: rgb(184, 182, 179);
+    position: relative; /* To properly position the 'x' button */
+}
+
+.close-message {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0;
+    position: absolute; /* Position the 'x' button */
+    right: 10px; /* Adjust to place it towards the right inside the message */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+
+
