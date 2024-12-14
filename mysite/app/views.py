@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 def index(request):
-    api_key_path = Path(__file__).parent / 'file.txt'
+    api_key_path = Path(__file__).parent / '.file.txt'
     api_key = api_key_path.read_text().strip()
     current_weather_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric'
 
