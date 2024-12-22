@@ -1,4 +1,3 @@
-from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 import requests
 from django.contrib import messages
@@ -79,31 +78,10 @@ def fetch_weather(city, api_key, current_weather_url):
         'sunset': response['sys']['sunset'],
         'country': response['sys']['country'],
 
-
-        # 'rain': response['rain']['1hr'],
-        'day_date': response['dt']
-
-        
-        
-   
-
+        'day_date': response['dt']        
     }
 
     return weather_data
-
-
-
-# {'coord': {'lon': 19.8189, 'lat': 41.3275}, 
-# 'weather': [{'id': 502, 'main': 'Rain', 'description': 'heavy intensity rain', 'icon': '10n'}], 
-# 'base': 'stations', 
-# 'main': {'temp': 281.64, 'feels_like': 280.53, 'temp_min': 281.64, 'temp_max': 281.64, 'pressure': 1006, 'humidity': 81, 'sea_level': 1006, 'grnd_level': 969}, 
-# 'visibility': 10000, 
-# 'wind': {'speed': 2.06, 'deg': 260}, 
-# 'rain': {'1h': 5.21}, 'clouds': {'all': 75}, 'dt': 1734732535, 
-# 'sys': {'type': 1, 'id': 6359, 'country': 'AL', 'sunrise': 1734674572, 'sunset': 1734707640}, 
-# 'timezone': 3600, 'id': 3183875, 'name': 'Tirana', 'cod': 200}
-
-
 
 
 def delete_item(request, city):
