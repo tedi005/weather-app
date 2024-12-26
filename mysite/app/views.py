@@ -27,17 +27,18 @@ def index(request):
             if weather_data not in weather_data_list:
                 weather_data_list.append(weather_data)
                 request.session['weather_data'] = weather_data_list
+                messages.success(request, f"{weather_data['city']} added successfully!")
             else:
                 messages.info(request, "City already added!")
         else:
-            messages.info(request, "City not found!")
+            messages.error(request, "City not found!")
             
         # Redirect to the same page to prevent resub
         return redirect('index')
     
     context = {
         'weather_data': request.session['weather_data'],
-        'weather_data2': json.dumps(request.session['weather_data']), #so the data can be used by java script
+        'weather_data2': json.dumps(request.session['weather_data']), #Data to use in javascript
     }
 
     return render(request, 'index.html', context)
@@ -89,10 +90,11 @@ def delete_item(request, city):
         weather_data = request.session.get('weather_data', [])
         updated_weather_data = [weather for weather in weather_data if weather['city'] != city]
         request.session['weather_data'] = updated_weather_data
+        messages.success(request, "City deleted!")
         return redirect('index')
+        
     
     # Handle GET request to show the delete confirmation page
-    
     return render(request, 'weather.html', {'city': city, })
 
 

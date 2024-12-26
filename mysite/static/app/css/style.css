@@ -5,6 +5,9 @@ body {
     padding: 50px;
     position: relative; /* Add this */
 }
+.clock span {
+    color: #d1ecf1;
+}
 
 form {
     margin: 20px 0;
@@ -73,7 +76,7 @@ form button {
     padding: 0;
     margin: 10px 0;
     position: absolute; /* Change to absolute */
-    top: 10px; /* Adjust as needed */
+    top: 1px; /* Adjust as needed */
     left: 50%;
     transform: translateX(-50%);
     width: 350px; /* Adjust width as needed */
