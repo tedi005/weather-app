@@ -2,5 +2,5 @@
 venv/
 
 #ignore the api key file
-file.txt
+.file.txt
 

@@ -37,7 +37,7 @@ def index(request):
     
     context = {
         'weather_data': request.session['weather_data'],
-        
+        'weather_data2': json.dumps(request.session['weather_data']), #so the data can be used by java script
     }
 
     return render(request, 'index.html', context)
@@ -92,7 +92,9 @@ def delete_item(request, city):
         return redirect('index')
     
     # Handle GET request to show the delete confirmation page
-    return render(request, 'weather.html', {'city': city})
+    
+    return render(request, 'weather.html', {'city': city, })
+
 
 
 def current_location_weather(api_key, current_weather_url):
@@ -107,37 +109,5 @@ def current_location_weather(api_key, current_weather_url):
             return None
     except Exception as e:
         return None
-
-
-
-# def see_more(request):
-#     weather_data_list = request.session.get('weather_data', [])
-#     detailed_data = [weather for weather in weather_data_list if weather]
-    
-#     if detailed_data:
-#         # return render(request, 'weather.html', {'city': city, 'weather_data2': detailed_data})
-#         return render(request, 'weather.html', {'weather_data2': detailed_data})
-#     else:
-#         messages.info(request, "No detailed data found for this city.")
-#         return redirect('index')
-#         # messages.info(request, "No detailed data found for this city.")
-#         # return redirect('index')
-
-
-
-
-
-
-
-# def prove(request):
-#     weather_data_list = request.session.get('weather_data', [])
-#     detailed_data = [weather for weather in weather_data_list]
-    
-#     if detailed_data:
-#         # return render(request, 'weather.html', {'city': city, 'weather_data2': detailed_data})
-#         return render(request, 'prove.html', {'weather_data': detailed_data})
-#     # else:
-#     #     messages.info(request, "No detailed data found for this city.")
-#     #     return redirect('index')
 
 
