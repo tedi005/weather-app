@@ -17,7 +17,6 @@
         </div>
     {% endfor %}
 {% endif %}
-<h4>{{city}}</h4>
 
 <!-- Delete Modal container -->
 <div id="delete-modal" class="modal" style="display:none;">
@@ -36,14 +35,18 @@
     </div>
 </div>
 
+
 <script>
-    const weatherData = JSON.parse('{{ weather_data2|escapejs }}');
     const csrfToken = "{{ csrf_token }}"; // Pass CSRF token t
     const deleteUrlTemplate = "{% url 'delete' 'city_placeholder' %}"; // Template for delete URL
 </script>
+
+
 <script src="{% static 'app/js/time_date.js' %}"></script>
+<script src="{% static 'app/js/see_more.js' %}"></script>
 <script src="{% static 'app/js/delete.js' %}"></script>
-<script src="{% static 'app/js/see_more.js' %}"></script> 
+
+
 
 
 

@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 import requests
 from django.contrib import messages
@@ -5,6 +6,7 @@ from urllib.request import urlopen
 import json
 from pathlib import Path
 
+from django.http import JsonResponse
 
 
 def index(request):
@@ -12,16 +14,17 @@ def index(request):
     api_key = api_key_path.read_text().strip()
     current_weather_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric'
 
+    # Ensure session has 'weather_data' key
     if 'weather_data' not in request.session:
         request.session['weather_data'] = []
-
 
     if request.method == 'POST':
         if 'current-location' in request.POST:
             weather_data = current_location_weather(api_key, current_weather_url)
         else:
-            city = request.POST['user_data']
+            city = request.POST.get('user_data', '').strip()
             weather_data = fetch_weather(city, api_key, current_weather_url)
+
         if weather_data:
             weather_data_list = request.session['weather_data']
             if weather_data not in weather_data_list:
@@ -32,16 +35,21 @@ def index(request):
                 messages.info(request, "City already added!")
         else:
             messages.error(request, "City not found!")
-            
-        # Redirect to the same page to prevent resub
-        return redirect('index')
+        
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            # Respond with JSON for AJAX requests
+            return JsonResponse({'weather_data': request.session['weather_data']})
+        else:
+            # Redirect for regular POST requests
+            return redirect('index')
     
-    context = {
-        'weather_data': request.session['weather_data'],
-        'weather_data2': json.dumps(request.session['weather_data']), #Data to use in javascript
-    }
+    # For regular GET requests, render the template
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({'weather_data': request.session['weather_data']})
+    else:
+        return render(request, 'index.html')
 
-    return render(request, 'index.html', context)
+
 
 def fetch_weather(city, api_key, current_weather_url):
     response = requests.get(current_weather_url.format(city, api_key)).json()
