@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // const DateTime = luxon.DateTime;
     const modal = document.getElementById("delete-modal");
     const modalBody = document.getElementById("modal-body");
     const closeButton = document.getElementsByClassName("close-button")[0];
@@ -13,8 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(response => response.json())
     .then(data => {
         const weatherData = data.weather_data;
-
-        // Iterate over the weather data
+        const csrfToken = data.csrf_token; // Ensure csrf_token is part of the response
+        const deleteUrlTemplate = data.delete_url_template;
+        // const deleteUrl = deleteUrlTemplate.replace("city_placeholder", city);
+       
         weatherData.forEach(function (weather) {
             const city = weather.city;
             const deleteButton = document.getElementById(`delete-button-${city}`);
@@ -22,12 +23,9 @@ document.addEventListener("DOMContentLoaded", function() {
             if (deleteButton) {
                 deleteButton.addEventListener("click", function (event) {
                     event.preventDefault(); // Prevent default link behavior
-                    console.log(`Want to delete ${weather.city}?`);
 
-                    // Generate the delete URL dynamically
                     const deleteUrl = deleteUrlTemplate.replace("city_placeholder", city);
 
-                    // Set the modal content
                     modalBody.innerHTML = `
                         <h3>Are you sure you want to delete ${city}?</h3>
                         <form action="${deleteUrl}" method="post" style="display:inline;">
@@ -37,17 +35,14 @@ document.addEventListener("DOMContentLoaded", function() {
                         </form>
                     `;
 
-                    // Display the modal
                     modal.style.display = "block";
 
-                    // Attach event listener to the cancel button within the modal
                     modal.querySelector('.close-modal').addEventListener('click', function() {
                         modal.style.display = "none";
                     });
                 });
             }
         });
-
     })
     .catch(error => {
         console.error('Error fetching weather data:', error);
@@ -65,3 +60,4 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
+

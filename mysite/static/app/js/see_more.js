@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
         var closeButton = document.getElementsByClassName("close-button2")[0];
 
         const weatherData = data.weather_data;
-        console.log(weatherData);
+        // console.log(weatherData);
         weatherData.forEach(weather => {
             const button = document.getElementById(`myBtn-${weather.city}`);
             if (button) {
                 button.addEventListener('click', function (event) {
                     event.preventDefault();
-                    console.log(`See more about ${weather.city}`);
+                    // console.log(`See more about ${weather.city}`);
                     modalBody.innerHTML = `
                         <h5>${weather.city}, ${weather.country} , <img src="http://openweathermap.org/img/wn/${weather.icon}.png"> </h5>
                         <p>Lon: ${weather.lon}, Lat: ${weather.lat}</p>
@@ -36,10 +36,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.warn(`Button not found for city: ${weather.city}`);
             }
         });
-
-        closeButton.onclick = function () {
-            modal.style.display = "none";
-        };
+        if (closeButton) {
+            closeButton.onclick = function() {
+                modal.style.display = "none";
+            };
+        } else {
+            console.warn("Close button not found in the DOM.");
+        }
 
         window.onclick = function (event) {
             if (event.target == modal) {
