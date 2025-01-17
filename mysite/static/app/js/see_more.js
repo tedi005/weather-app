@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <p>Wind Speed: ${weather.wind_speed} m/s, Wind Direction: ${weather.wind_deg}°</p>
                         <p>timezone: ${weather.timezone}</p>
                         <p>Clouds: ${weather.clouds} %</p>
-                        <button type="button" onclick="window.location.href='/'" class="btn btn-secondary">Cancel</button>
+                        <button type="button" onclick="window.location.href='/'" class="btn btn-outline-dark">Cancel</button>
                     `;
                     modal.style.display = 'block';
                 });
