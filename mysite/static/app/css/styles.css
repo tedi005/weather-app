@@ -1,21 +1,9 @@
 body{
     background-color: rgb(86, 77, 77);
 }
-/* .messages{
-    list-style-type: none;
-    position: fixed;
-    justify-content: center;
-    text-align: center;
-    background-color: rgb(255, 255, 255);
-    border-style: 2px solid black;
-    border-radius: 5px;
-    top: 5px;
-    padding: 5px;
-    left: 45%;
 
-}
- */
- .messages {
+
+.messages {
     list-style: none;
     position: fixed;
     top: 5px;
@@ -26,33 +14,13 @@ body{
     border-radius: 10px;
     padding: 0.5%;
     text-align: center;
-    width: 85%;
+    width: 75%;
+    /* max-width:  500px; */
     /* margin-left: 50%;
     margin-right: 1%; */
     
 }
 
-/* .messages{
-    list-style: none;
-    position: fixed;
-    display: block;
-    display: inline-block;
-    top: 5px;
-    text-align: center;
-    /* justify-content: center; */
-    /* margin: auto; *
-    margin-left: auto;
-    margin-right: auto;
-    white-space: nowrap;
-    overflow-x: auto;
-    width: 100%;
-    margin-left: 30%;
-    /* margin-right: 30%; *
-    border-style: solid 5px black;
-    /* background-color: aqua; *
-    border-radius: 3%;
-    
-} */
 
 
 .clock {
@@ -101,11 +69,16 @@ body{
 /* Style the button container within the form */
 .button-container {
     display: flex;
-    justify-content: space-between;
-    gap: 9%;
+    /* justify-content: space-between; */
+    gap: 15%;
     margin-top: 0.5%;
 }
 
+.icon-container .btn {
+    height: 40px; /* Set a fixed height for consistency */
+    padding: 10px 10px; /* Ensure padding is consistent */
+    line-height: normal; /* Reset line height for text alignment */
+}
 
 /* universal style from all the buttons */
 .btn {
@@ -124,7 +97,7 @@ body{
 }
 /* icons within the button */
 .btn i {
-    margin-right: 5px; /* Optional: Space between icon and text */
+    margin-right: 1%; /* Optional: Space between icon and text */
 } 
 
 
@@ -154,6 +127,16 @@ body{
         font-size: 2.6vw;
         padding: 5px;
     }
+
+
+    .icon-container .btn{
+        padding: 2% 2% auto 2%;
+    }
+    
+
+    .icon-container p{
+        font-size: 2vw;
+    }
 }
 
 @media (max-width: 425px) {
@@ -168,37 +151,7 @@ body{
         font-size: 3.2vw;
         padding: 5px;
     }
-}
 
-@media (max-width: 375px) {
-    .clock {
-        font-size: 1.9rem;
-        margin-top: 1%;
-    }
-    .clock #am{
-        font-size: 0.6rem;
-    }
-    .messages{
-        font-size: 4vw;
-        padding: 5px;
-        
-    }
-}
-
-
-
-@media (max-width: 320px) {
-    .clock {
-        font-size: 0.9rem;
-        margin-top: 11%;
-    }
-    .clock #am{
-        font-size: 0.6rem;
-    }
-    .messages{
-        font-size: 4.2vw;
-        padding: 5px;
-    }
 
     .form-control {
         width: 70%; /* Adjust width for smaller screens */
@@ -207,10 +160,10 @@ body{
     .btn {
         width: 50%;
         font-size: 3.5vw;
-        padding-left:5px;
+        /* padding-left:15px; */
     }
     .btn i {
-        margin-right: 1.5%; /* Optional: Space between icon and text */
+        margin-right: 1%; /* Optional: Space between icon and text */
     }
 
     /* the butttons/date within the weather container */
@@ -230,5 +183,69 @@ body{
     .data-container img {
         font-size: 2.8vw;  /* Adjust the font size for text and image */
     }
+}
+
+@media (max-width: 375px) {
+    .clock {
+        font-size: 1.9rem;
+        margin-top: 1%;
+    }
+    .clock #am{
+        font-size: 0.6rem;
+    }
+    .messages{
+        font-size: 3.5vw;
+        padding: 5px;
+        
+    }
+
+    .form-control {
+        width: 70%; /* Adjust width for smaller screens */
+        font-size: 2.5vw; /* Adjust font size for smaller screens */
+    }
+    .btn {
+        width: 50%;
+        font-size: 3.5vw;
+        /* padding-left:15px; */
+    }
+    .btn i {
+        margin-right: 1%; /* Optional: Space between icon and text */
+    }
+
+    /* the butttons/date within the weather container */
+    .icon-container .btn {
+        width: 25%;
+        font-size: 4vw;
+    }
+    .icon-container .btn i {
+        margin-right: 1.5%; /* Optional: Space between icon and text */
+    }
+    .icon-container p{
+        font-size: 3.2vw;
+    }
+    
+    .data-container h2, 
+    .data-container p, 
+    .data-container img {
+        font-size: 2.8vw;  /* Adjust the font size for text and image */
+    }
+}
+
+
+
+@media (max-width: 320px) {
+    .clock {
+        font-size: 0.9rem;
+        margin-top: 11%;
+    }
+    .clock #am{
+        font-size: 0.6rem;
+    }
+    .messages{
+        font-size: 4.2vw;
+        padding: 5px;
+    }
+
+   
 
 }

@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const modal = document.getElementById("delete-modal");
     const modalBody = document.getElementById("modal-body");
-    const closeButton = document.getElementsByClassName("close-button")[0];
+    // const closeButton = document.getElementsByClassName("close-button")[0];
 
     // Fetch weather data dynamically
     fetch('/', {
@@ -49,9 +49,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Close the modal when the close button is clicked
-    closeButton.onclick = function() {
-        modal.style.display = "none";
-    }
+    // closeButton.onclick = function() {
+    //     modal.style.display = "none";
+    // }
 
     // Close the modal when the user clicks outside the modal
     window.onclick = function(event) {

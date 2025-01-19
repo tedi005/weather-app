@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(data => {
         var modal = document.getElementById("delete-modal2");
         var modalBody = document.getElementById("modal-body2");
-        var closeButton = document.getElementsByClassName("close-button2")[0];
+        // var closeButton = document.getElementsByClassName("close-button2")[0];
 
         const weatherData = data.weather_data;
         // console.log(weatherData);
@@ -36,13 +36,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.warn(`Button not found for city: ${weather.city}`);
             }
         });
-        if (closeButton) {
-            closeButton.onclick = function() {
-                modal.style.display = "none";
-            };
-        } else {
-            console.warn("Close button not found in the DOM.");
-        }
+        // if (closeButton) {
+        //     closeButton.onclick = function() {
+        //         modal.style.display = "none";
+        //     };
+        // } else {
+        //     console.warn("Close button not found in the DOM.");
+        // }
 
         window.onclick = function (event) {
             if (event.target == modal) {

@@ -1,0 +1,34 @@
+
+
+.modal-content {
+    background-color: rgb(255, 255, 255);
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Targeting h3 within modal-content */
+.modal-content #modal-body h3 {
+    font-size: 1.5em; /* Default size for medium screens */
+}
+
+@media (max-width: 768px) {
+    .modal-content #modal-body h3 {
+        font-size: 1em; /* Smaller size for tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content #modal-body h3 {
+        font-size: 1.2em; /* Smaller size for phones */
+    }
+}
+
+
