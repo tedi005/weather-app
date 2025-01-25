@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 gunicorn==23.0.0
 packaging==24.2
+=======
+>>>>>>> 28f1103 (switched dir)
 asgiref==3.8.1
 certifi==2024.12.14
 charset-normalizer==3.4.1

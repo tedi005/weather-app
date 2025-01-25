@@ -1,0 +1,17 @@
+# ignore venv folder
+# venv/
+# static/
+# __pycache__/
+
+# .env
+# db.sqlite3
+
+# Ignore the static folder
+/static/
+
+# Ignore all __pycache__ folders
+**/__pycache__/
+
+# Ignore the SQLite database file
+db.sqlite3
+.env
