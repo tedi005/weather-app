@@ -1,0 +1,8 @@
+# ignore venv folder
+venv/
+
+#ignore the api key file
+.file.txt
+
+# Ignore all __pycache__ folders
+**/__pycache__/

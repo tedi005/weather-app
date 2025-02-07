@@ -1,0 +1,47 @@
+.weather-results{
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 2%;
+    border-radius: 2%;
+    width: 75%; /* Adjust the width as per your preference */
+    max-width: 500px; /* Optional: Set a maximum width */
+    margin: 0 auto 3%; /* Centers the container horizontally */
+    /* padding: 5%;  */
+
+}
+.icon-container{
+    padding: 2% 2%;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Adjusts the spacing between items */
+    gap: 10px; /* Adds space between elements */
+    
+}
+.icon-container button {
+    width: 100px; /* Set a fixed width for the buttons */
+    margin: 0;
+}
+
+.icon-container button {
+    margin: 0;
+}
+
+
+
+.data-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center items */
+    align-items: center; /* Horizontally center items */
+    text-align: center; /* Optional: Ensure text is centered */
+    padding: 4%;
+    margin: auto;
+}
+    
+.data-container img {
+    width: 50px; /* Adjust size of the image if necessary */
+    height: 50px;
+}
+
